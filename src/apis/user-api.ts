@@ -1,17 +1,17 @@
-﻿import { BaseApi } from "./base/base-api";
-import { IBaseApi } from "./base/base-api-interface";
+﻿import { IApiBase } from "./base/interface-api-base";
+import { ApiBase } from "./base/api-base";
 import { Route } from "../models/route";
 import { RouteHandler } from "../models/route-handler";
 
-class UserApi extends BaseApi implements IBaseApi {
+class UserApi extends ApiBase implements IApiBase {
 
     public baseUrl: string = '/users';
 
     public routes: Route[] = [
-        new Route(this.createRoute('/me'), new RouteHandler(this.me))
+        new Route(this.mapRoute('/me'), new RouteHandler(this.me))
     ];
 
-    public me(request: Object, response: Object, next: Function) {
+    public me(request: any, response: any, next: Function) {
         this.success(response, { message: 'Hello There' });
     }
 }

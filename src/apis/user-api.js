@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var base_api_1 = require("./base/base-api");
+var api_base_1 = require("./base/api-base");
 var route_1 = require("../models/route");
 var route_handler_1 = require("../models/route-handler");
 var UserApi = (function (_super) {
@@ -19,7 +19,7 @@ var UserApi = (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.baseUrl = '/users';
         _this.routes = [
-            new route_1.Route(_this.createRoute('/me'), new route_handler_1.RouteHandler(_this.me))
+            new route_1.Route(_this.mapRoute('/me'), new route_handler_1.RouteHandler(_this.me))
         ];
         return _this;
     }
@@ -27,7 +27,7 @@ var UserApi = (function (_super) {
         this.success(response, { message: 'Hello There' });
     };
     return UserApi;
-}(base_api_1.BaseApi));
+}(api_base_1.ApiBase));
 var userApi = new UserApi();
 exports.UserApi = userApi;
 //# sourceMappingURL=user-api.js.map

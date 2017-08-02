@@ -2,20 +2,12 @@
 
     grunt.initConfig({
         ts: {
-            server: {
-                src: ["src/server/**/**/**.ts"],
-                outDir: 'build/server',
+            build: {
+                src: ["src/**/**/**.ts"],
+                outDir: 'build',
                 options: {
-                    rootDir: 'src/server/',
-                    sourceMap: true
-                }
-            },
-            client: {
-                src: ["src/client/**/**/**.ts"],
-                outDir: 'build/client/',
-                options: {
-                    rootDir: 'src/client/',
-                    sourceMap: true
+                    rootDir: 'src',
+                    sourceMap: false
                 }
             }
         },
@@ -28,22 +20,33 @@
         },
         shell: {
             run: {
-                command: 'node build/server/index'
+                command: 'node build/index'
             },
-            /*
             lint: {
                 command: 'ng lint'
-            }*/
-        }
+            }
+        },
+        copy: {
+            assets: {
+                files: [
+                    { expand: true, src: ['src/static/css/**/*'], dest: 'build/static/css', filter: 'isFile', flatten: true },
+                    { expand: true, src: ['src/static/js/**/*'], dest: 'build/static/js', filter: 'isFile', flatten: true },
+                    { expand: true, src: ['src/static/images/**/*'], dest: 'build/static/images', filter: 'isFile', flatten: true },
+                    { expand: true, src: ['src/static/views/pages/*'], dest: 'build/static/views/pages', filter: 'isFile', flatten: true }
+                ]
+            }
+        },
     });
 
     //import task runner
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks("grunt-ts");
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     //tasks
-    grunt.registerTask('default', ['watch']);      
-    grunt.registerTask('build', ['ts']);
-    grunt.registerTask('run', ['shell:run']);
+    grunt.registerTask('default', ['watch']);     
+    grunt.registerTask('watch', ['watch']);
+    grunt.registerTask('build', ['ts', 'copy']);
+    grunt.registerTask('run', ['ts', 'copy', 'shell:run']);
 };
