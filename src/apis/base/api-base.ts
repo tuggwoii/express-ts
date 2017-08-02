@@ -1,4 +1,4 @@
-﻿import { Route } from "../../models/route";
+﻿import { Route } from "../../models/routes/route";
 import { IApiBase} from "./interface-api-base";
 
 export class ApiBase implements IApiBase {

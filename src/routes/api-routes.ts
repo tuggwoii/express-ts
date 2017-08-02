@@ -9,7 +9,7 @@ class ApiRoutes implements IRouteBase {
 
     ];
 
-    public handler(request: any, response: any, next: Function) {
+    public handle(request: any, response: any, next: Function) {
         
     }
 }

@@ -1,11 +1,10 @@
 ﻿import { IPageBase } from "../pages/base/interface-page-base";
 import { IRouteBase } from "./base/interface-route-base";
 import * as IndexPage from "../pages/index-page";
-import { Route } from "../models/route";
 
 class PageRoutes implements IRouteBase {
 
-    public handler(request: any, response: any, next: Function) {
+    public handle(request: any, response: any, next: Function) {
 
         let route = this.findRoute(request.url);
 

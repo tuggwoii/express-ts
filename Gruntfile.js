@@ -35,7 +35,7 @@
                     { expand: true, src: ['src/static/views/pages/*'], dest: 'build/static/views/pages', filter: 'isFile', flatten: true }
                 ]
             }
-        },
+        }
     });
 
     //import task runner
@@ -44,9 +44,13 @@
     grunt.loadNpmTasks("grunt-ts");
     grunt.loadNpmTasks('grunt-contrib-copy');
 
+    grunt.registerTask('notify', 'A sample task that logs stuff.', function () {
+        grunt.log.writeln('----------------------Build success--------------------');
+    });
+
     //tasks
     grunt.registerTask('default', ['watch']);     
     grunt.registerTask('watch', ['watch']);
     grunt.registerTask('build', ['ts', 'copy']);
-    grunt.registerTask('run', ['ts', 'copy', 'shell:run']);
+    grunt.registerTask('run', ['ts', 'copy', 'notify', 'shell:run']);
 };
