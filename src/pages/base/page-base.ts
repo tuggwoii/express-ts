@@ -1,4 +1,5 @@
 ﻿import { IPageBase } from "./interface-page-base";
+import { IResponse } from "../../models/responses/interface-response";
 
 declare function require(name: string);
 declare const global: any;
@@ -11,7 +12,8 @@ export class PageBase implements IPageBase {
 
     public view: string = 'static/views/pages/index.html';
 
-    public response(response: any) {
-        response.status(200).render(path.join(global.rootDir, this.view));
+    public response(response: IResponse) {
+        response.status(200)
+        .render(path.join(global.rootDir, this.view));
     }
 }

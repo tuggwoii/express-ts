@@ -1,0 +1,32 @@
+{
+  "development": {
+    "username": "tugg",
+    "password": "tugg2017",
+    "database": "ExpressTS",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialectOptions": {
+      "encrypt": true
+    }
+  },
+  "test": {
+    "username": "tugg",
+    "password": "tugg2017",
+    "database": "ExpressTS",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialectOptions": {
+      "encrypt": true
+    }
+  },
+  "production": {
+    "username": "tugg",
+    "password": "tugg2017",
+    "database": "ExpressTS",
+    "host": "localhost",
+    "dialect": "mssql",
+    "dialectOptions": {
+      "encrypt": true
+    }
+  }
+}

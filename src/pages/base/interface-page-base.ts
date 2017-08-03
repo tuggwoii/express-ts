@@ -1,8 +1,10 @@
-﻿export interface IPageBase {
+﻿import { IResponse } from "../../models/responses/interface-response";
+
+export interface IPageBase {
 
     url: string;
 
     view: string;
 
-    response(response: any);
+    response(response: IResponse): void;
 }

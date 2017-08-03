@@ -5,9 +5,12 @@ import * as ApiRoutes from './routes/api-routes';
 import * as PageRoutes from './routes/page-routes';
 import * as ErrorHandler from './errors/server-error-handler';
 import * as NotFoundHandler from './errors/not-found-handler';
+import * as Authentication from "./middlewares/authentication";
+import { IResponse } from "./models/responses/interface-response";
+import { IRequest } from "./models/requests/interface-request";
+import { DataInitialize } from "./databases/data-initialize";
 
 //declare globla variable
-declare function require(name: string);
 declare const process: any;
 declare const global: any;
 
@@ -40,6 +43,7 @@ class Server {
         this.app.engine('html', ejs.renderFile);
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json());
+        this.app.use(Authentication());
     }
 
     private static(): void {
@@ -51,26 +55,33 @@ class Server {
 
     private routes(): void {
 
-        this.app.use('/api', (request: any, response: any, next: Function) => {
+        this.app.use('/api', (request: IRequest, response: IResponse, next: Function) => {
             ApiRoutes.handle(request, response, next);
         })
 
-        this.app.use('/', (request: any, response: any, next: Function) => {
+        this.app.use('/', (request: IRequest, response: IResponse, next: Function) => {
             PageRoutes.handle(request, response, next);
         })
 
-        this.app.use('*', (request: any, response: any, next: Function) => {
+        this.app.use('*', (request: IRequest, response: IResponse, next: Function) => {
             NotFoundHandler.handle(request, response)
         })
 
-        this.app.use((err: any, request: any, response: any, next: Function) => {
+        this.app.use((err: any, request: IRequest, response: IResponse, next: Function) => {
             ErrorHandler.handle(err, request, response);
         })
     }
 
     private run(): void {
-        this.app.listen(this.port, () => {
-            console.log('App runing on port ' + this.port);
+
+        DataInitialize.init().then(() => {
+
+            this.app.listen(this.port, () => {
+                console.log('App runing on port ' + this.port);
+            })
+
+        }).catch((err) => {
+            console.log(err);
         })
     }
 }
