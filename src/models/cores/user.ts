@@ -1,6 +1,7 @@
 ﻿import { IBaseModel } from "./base/interface-base-model";
+import { BaseModel } from "./base/base-model";
 
-export class Authentication implements IBaseModel {
+export class User extends BaseModel implements IBaseModel {
 
     public id: number;
 
@@ -12,10 +13,10 @@ export class Authentication implements IBaseModel {
 
     public refreshToken: string;
 
+    public lastRefreshToken: Date;
+
     constructor(data?: any) {
-        if (data) {
-            this.cast(data);
-        }
+        super(data);
     }
 
     public cast(data?: any) {
@@ -24,5 +25,8 @@ export class Authentication implements IBaseModel {
         this.password = data.password;
         this.token = data.token;
         this.refreshToken = data.refreshToken;
+        if (data.lastRefreshToken) {
+            this.lastRefreshToken = new Date(data.lastRefreshToken);
+        }
     }
 }

@@ -2,7 +2,7 @@
 module.exports = {
     up: function (queryInterface, Sequelize) {
 
-        return queryInterface.createTable('Authentications', {
+        return queryInterface.createTable('Users', {
             Id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
@@ -25,6 +25,10 @@ module.exports = {
                 type: Sequelize.STRING(1000),
                 allowNull: true
             },
+            LastRefreshToken: {
+                type: Sequelize.DATE,
+                allowNull: true
+            },
             CreatedAt: {
                 type: Sequelize.DATE,
                 allowNull: false
@@ -38,7 +42,7 @@ module.exports = {
     },
     down: function (queryInterface, Sequelize) {
 
-        return queryInterface.dropTable('Authentications');
+        return queryInterface.dropTable('Users');
 
     }
 };

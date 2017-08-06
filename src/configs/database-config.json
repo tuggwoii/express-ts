@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "tugg",
-    "password": "tugg2017",
+    "password": "tugg2016",
     "database": "ExpressTS",
     "host": "localhost",
     "dialect": "mssql",

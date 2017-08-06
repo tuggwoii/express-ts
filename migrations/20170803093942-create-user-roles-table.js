@@ -4,18 +4,18 @@ module.exports = {
 
     up: function (queryInterface, Sequelize) {
 
-        return queryInterface.createTable('AuthenticationRoles', {
+        return queryInterface.createTable('UserRoles', {
             Id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false
             },
-            AuthenticationId: {
+            UserId: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'Authentications',
+                    model: 'Users',
                     key: 'Id'
                 },
                 onDelete: 'cascade',
@@ -45,7 +45,7 @@ module.exports = {
 
     down: function (queryInterface, Sequelize) {
 
-        return queryInterface.dropTable('AuthenticationRoles');
+        return queryInterface.dropTable('UserRoles');
 
     }
 };

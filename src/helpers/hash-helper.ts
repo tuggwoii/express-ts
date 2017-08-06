@@ -1,6 +1,6 @@
 ﻿import * as config from "../configs/config"
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 const crypto = require('crypto');
 const algorithm = 'sha256';
 const saltRounds = 10;
@@ -8,24 +8,26 @@ var randomString = require('shortid');
 
 export class HashHelper {
 
-    static hashPagssword(password: string): string {
+    static hashPassword(password: string): string {
 
-        var hash = bcrypt.hashSync(password, saltRounds);
+        var hash = bcrypt.hashSync(password, bcrypt.genSaltSync(saltRounds));
 
-        return password;
+        return hash;
     }
 
     static comparePassword(password: string, hash: string): boolean {
 
         return bcrypt.compareSync(password, hash);
-
     }
 
     static generateToken(): string {
 
-        let token = randomString.generate();
+        let token = '';
+        for (let i = 0; i < saltRounds; i++) {
+            token += randomString.generate()
+        }
 
-        return this.hashPagssword(token);
+        return token;
     }
 
     static encrypt(data: string) {

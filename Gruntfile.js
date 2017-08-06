@@ -66,7 +66,6 @@
     grunt.loadNpmTasks("grunt-ts");
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-env');
-
     grunt.registerTask('notify', 'A sample task that logs stuff.', function () {
         grunt.log.writeln('----------------------Build success---------------------');
     });

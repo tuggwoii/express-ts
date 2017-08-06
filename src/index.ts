@@ -64,7 +64,7 @@ class Server {
         })
 
         this.app.use('*', (request: IRequest, response: IResponse, next: Function) => {
-            NotFoundHandler.handle(request, response)
+            NotFoundHandler.handle(request, response);
         })
 
         this.app.use((err: any, request: IRequest, response: IResponse, next: Function) => {
@@ -75,11 +75,8 @@ class Server {
     private run(): void {
 
         DataInitialize.init().then(() => {
-
-            this.app.listen(this.port, () => {
-                console.log('App runing on port ' + this.port);
-            })
-
+            this.app.listen(this.port, () =>
+                console.log('App runing on port ' + this.port))
         }).catch((err) => {
             console.log(err);
         })

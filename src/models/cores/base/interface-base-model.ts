@@ -1,5 +1,7 @@
 ﻿export interface IBaseModel {
 
-    cast(data?: any);
+    cast(data?: any): void;
+
+    toJSON(): JSON;
 
 }
