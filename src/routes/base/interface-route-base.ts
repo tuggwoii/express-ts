@@ -1,5 +1,8 @@
-﻿export interface IRouteBase {
+﻿import { IRequest } from "../../models/requests/interface-request";
+import { IResponse } from "../../models/responses/interface-response";
 
-    handle(request: any, response: any, next: Function);
+export interface IRouteBase {
+
+    handle(request: IRequest, response: IResponse, next: Function): void;
 
 }

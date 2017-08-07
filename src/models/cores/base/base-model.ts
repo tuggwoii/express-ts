@@ -1,6 +1,14 @@
 ﻿import { IBaseModel } from "./interface-base-model";
 
+declare const Promise: any;
+
 export class BaseModel implements IBaseModel {
+
+    isValid(): Promise<Array<string>> {
+        return new Promise((resolve, reject) => {
+            resolve([]);
+        });
+    }
 
     constructor(data?: any) {
         if (data) {
@@ -8,7 +16,7 @@ export class BaseModel implements IBaseModel {
         }
     }
 
-    cast(data?: any): void {
+    cast(data: any): void {
        
     }
 

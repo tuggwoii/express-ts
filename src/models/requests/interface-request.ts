@@ -1,7 +1,11 @@
-﻿export interface IRequest {
+﻿import { RequestMethods } from "./request-methods";
+
+export interface IRequest {
 
     url: string;
 
-    method: string
+    method: RequestMethods
+
+    body: any;
 
 }

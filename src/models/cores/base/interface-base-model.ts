@@ -2,6 +2,8 @@
 
     cast(data?: any): void;
 
-    toJSON(): JSON;
+    toJSON(): any;
+
+    isValid(): Promise<Array<string>>
 
 }

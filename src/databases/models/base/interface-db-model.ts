@@ -2,6 +2,6 @@
 
     create(t: T): Promise<any>
 
-    findOne(): Promise<T>;
+    findOne(query?: any): Promise<T>;
 
 }

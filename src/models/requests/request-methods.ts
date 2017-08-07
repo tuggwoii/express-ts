@@ -1,13 +1,5 @@
-﻿export class RequestMethods {
-    
-    static GET: string = "get";
+﻿import { Enum } from "typescript-string-enums";
 
-    static POST: string = "post";
+export const RequestMethods = Enum("GET", "POST", "PUT", "PATCH", "DELETE");
 
-    static PATCH: string = "patch";
-
-    static PUT: string = "put";
-
-    static DELETE: string = "delete";
-
-}
+export type RequestMethods = Enum<typeof RequestMethods>;

@@ -2,7 +2,7 @@
 
     send(data: Object): void;
 
-    json(data: JSON): void;
+    json(data: any): void;
 
     render(view: string, data?: Object): void;
 
