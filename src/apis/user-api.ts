@@ -4,8 +4,8 @@ import { Route } from "../models/routes/route";
 import { IRequest } from "../models/requests/interface-request";
 import { IResponse } from "../models/responses/interface-response";
 import { RequestMethods } from "../models/requests/request-methods";
-import * as UserRolesDBModel from "../databases/models/user-roles";
 import { Login } from "../models/requests/login";
+import * as UserRolesDBModel from "../databases/models/user-roles";
 
 class UserApiController extends ApiControllerBase implements IApiControllerBase {
 
@@ -35,4 +35,6 @@ class UserApiController extends ApiControllerBase implements IApiControllerBase 
 
 let userApiController = new UserApiController();
 
-export { userApiController as UserApiController }
+export {
+    userApiController as UserApiController
+}

@@ -9,7 +9,8 @@
                     rootDir: 'src',
                     sourceMap: false,
                     experimentalDecorators: true,
-                    emitDecoratorMetadata: true
+                    emitDecoratorMetadata: true,
+                    lib: ['es2015']
                 }
             }
         },

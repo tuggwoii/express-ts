@@ -1,10 +1,10 @@
 ﻿import * as Sequelize from "../database";
-import { IDBModel } from "./base/interface-db-model";
 import { User } from "../../models/cores/user";
+import { BaseDBModel } from "./base/base-db-model";
 
 const sequelize = require('sequelize');
 
-const UsersDBModel: IDBModel<User> = Sequelize.define('Users', {
+const UsersDBModel: BaseDBModel<User> = Sequelize.define('Users', {
     id: {
         field: 'Id',
         type: sequelize.INTEGER,

@@ -1,5 +1,8 @@
 ﻿{
   "compileOnSave": false,
   "experimentalDecorators": true,
-  "emitDecoratorMetadata": true
+  "emitDecoratorMetadata": true,
+  "compilerOptions": {
+    "lib": [ "es2015" ]
+  }
 }

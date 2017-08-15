@@ -4,7 +4,7 @@ declare const Promise: any;
 
 export class BaseModel implements IBaseModel {
 
-    isValid(): Promise<Array<string>> {
+    isValid(): Promise<Array<string>|any> {
         return new Promise((resolve, reject) => {
             resolve([]);
         });
@@ -17,7 +17,7 @@ export class BaseModel implements IBaseModel {
     }
 
     cast(data: any): void {
-       
+
     }
 
     toJSON(): any {

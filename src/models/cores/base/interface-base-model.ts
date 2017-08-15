@@ -4,6 +4,5 @@
 
     toJSON(): any;
 
-    isValid(): Promise<Array<string>>
-
+    isValid(): Promise<Array<string>|any>
 }
