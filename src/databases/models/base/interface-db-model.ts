@@ -2,5 +2,10 @@
 
     create(t: T): Promise<any>
 
-    findOne(query?: any): Promise<T>;
+    findById(id: number): Promise<T>
+
+    findOne(query?: any): Promise<T>
+
+    findAll(query?: any): Promise<Array<T>>
+
 }

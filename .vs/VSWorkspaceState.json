@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\apis\\base"
+    "\\src\\errors",
+    "\\src\\middlewares",
+    "\\src\\routes",
+    "\\src\\routes\\base",
+    "\\src\\services",
+    "\\src\\static"
   ],
-  "SelectedNode": "\\src\\apis",
+  "SelectedNode": "\\src\\middlewares\\authentication.ts",
   "PreviewInSolutionExplorer": false
 }

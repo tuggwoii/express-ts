@@ -6,6 +6,7 @@ import { IResponse } from "../models/responses/interface-response";
 import { RequestMethods } from "../models/requests/request-methods";
 import { Login } from "../models/requests/login";
 import * as UserRolesDBModel from "../databases/models/user-roles";
+import { SimpleUser } from "../models/responses/simple-user";
 
 class UserApiController extends ApiControllerBase implements IApiControllerBase {
 
@@ -18,7 +19,9 @@ class UserApiController extends ApiControllerBase implements IApiControllerBase 
 
     public me(context: IApiControllerBase, request: IRequest, response: IResponse) {
 
-        context.success(response, { message: 'Hello There' });
+        console.log(request.user);
+
+        context.success(response, new SimpleUser(request.user));
     }
 
     public login(context: IApiControllerBase, request: IRequest, response: IResponse) {

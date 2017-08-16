@@ -1,5 +1,5 @@
-﻿import { IBaseModel } from "./base/interface-base-model";
-import { BaseModel } from "./base/base-model";
+﻿import { BaseModel } from "../base/base-model";
+import { IBaseModel } from "../base/interface-base-model";
 
 export class Role extends BaseModel implements IBaseModel {
 

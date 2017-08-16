@@ -1,5 +1,5 @@
-import { BaseModel } from "../cores/base/base-model";
-import { IBaseModel } from "../cores/base/interface-base-model";
+import { BaseModel } from "../base/base-model";
+import { IBaseModel } from "../base/interface-base-model";
 
 export class Response extends BaseModel implements IBaseModel {
 
