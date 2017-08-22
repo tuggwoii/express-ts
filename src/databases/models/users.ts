@@ -1,6 +1,7 @@
-﻿import * as Sequelize from "../database";
+﻿import * as Sequelize from "../database-connection";
 import { User } from "../../models/cores/user";
 import { BaseDBModel } from "./base/base-db-model";
+import * as UserRolesDBModel from "./user-roles";
 
 const sequelize = require('sequelize');
 

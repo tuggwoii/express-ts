@@ -1,4 +1,4 @@
-﻿import * as Sequelize from "../database";
+﻿import * as Sequelize from "../database-connection";
 import { IDBModel } from "./base/interface-db-model";
 import { Role } from "../../models/cores/role";
 

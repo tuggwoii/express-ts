@@ -1,5 +1,6 @@
 import { BaseModel } from "../base/base-model";
 import { IBaseModel } from "../base/interface-base-model";
+import { Role } from "./role";
 
 export class UserRole extends BaseModel implements IBaseModel {
 
@@ -9,6 +10,8 @@ export class UserRole extends BaseModel implements IBaseModel {
 
     public roleId: number;
 
+    public role: Role;
+
     constructor(data?: any) {
         super(data);
     }
@@ -17,5 +20,8 @@ export class UserRole extends BaseModel implements IBaseModel {
         this.id = data.id
         this.userId = data.userId;
         this.roleId = data.roleId;
+        if (data.role) {
+            this.role = data.role
+        }
     }
 }

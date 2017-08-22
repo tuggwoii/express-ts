@@ -1,12 +1,11 @@
-﻿import { IPageBase } from "./interface-page-base";
-import { IResponse } from "../../models/responses/interface-response";
+﻿import { IPageBaseController } from "./interface-page-base-controller";
+import { IResponse } from "../../../models/responses/base/interface-response";
 
-declare function require(name: string);
 declare const global: any;
 const fs: any = require('fs');
 const path: any = require('path');
 
-export class PageBase implements IPageBase {
+export class PageBaseController implements IPageBaseController {
 
     public url: string = '/';
 

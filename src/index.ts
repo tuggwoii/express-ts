@@ -6,9 +6,9 @@ import * as PageRoutes from './routes/page-routes';
 import * as ErrorHandler from './errors/server-error-handler';
 import * as NotFoundHandler from './errors/not-found-handler';
 import * as Authentication from "./middlewares/authentication";
-import { IResponse } from "./models/responses/interface-response";
-import { IRequest } from "./models/requests/interface-request";
-import { DataInitialize } from "./databases/data-initialize";
+import { IResponse } from "./models/responses/base/interface-response";
+import { IRequest } from "./models/requests/base/interface-request";
+import { DatabaseInitializer } from "./databases/database-initializer";
 
 //declare globla variable
 declare const process: any;
@@ -43,7 +43,7 @@ class Server {
         this.app.engine('html', ejs.renderFile);
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json());
-        this.app.use(Authentication());
+        this.app.use(Authentication.execute());
     }
 
     private static(): void {
@@ -74,9 +74,8 @@ class Server {
 
     private run(): void {
 
-        DataInitialize.init().then(() => {
-            this.app.listen(this.port, () =>
-                console.log('App runing on port ' + this.port))
+        DatabaseInitializer.init().then(() => {
+            this.app.listen(this.port, () => console.log('App runing on port ' + this.port));
         }).catch((err) => {
             console.log(err);
         })

@@ -17,6 +17,14 @@ module.exports = {
                 type: Sequelize.STRING(1000),
                 allowNull: true
             },
+            FacebookId: {
+                type: Sequelize.STRING(20),
+                allowNull: true
+            },
+            GoogleId: {
+                type: Sequelize.STRING(20),
+                allowNull: true
+            },
             Token: {
                 type: Sequelize.STRING(1000),
                 allowNull: true

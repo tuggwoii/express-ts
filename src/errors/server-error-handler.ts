@@ -7,7 +7,6 @@ class ServerErrorHandler extends ErrorHandlerBase implements IErrorHandlerBase {
         console.log(err)
         response.status(500).send('Something broke!');
     }
-
 }
 
 let serverError = new ServerErrorHandler();

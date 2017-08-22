@@ -1,6 +1,6 @@
 ﻿import { RequestMethods } from "./request-methods";
 import { RequestHeader } from "./request-header";
-import { User } from "../cores/user";
+import { User } from "../../cores/user";
 
 export interface IRequest {
 

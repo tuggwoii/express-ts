@@ -1,8 +1,9 @@
-﻿import { IPageBase } from "../pages/base/interface-page-base";
+﻿import { IPageBaseController } from "../controllers/pages/base/interface-page-base-controller";
 import { IRouteBase } from "./base/interface-route-base";
-import * as IndexPage from "../pages/index-page";
+import { RouteBase } from "./base/route-base";
+import * as IndexPageController from "../controllers/pages/index-page-controller";
 
-class PageRoutes implements IRouteBase {
+class PageRoutes extends RouteBase implements IRouteBase {
 
     public handle(request: any, response: any, next: Function) {
 
@@ -14,10 +15,9 @@ class PageRoutes implements IRouteBase {
         else {
             next();
         }
-
     }
 
-    private findRoute(url: string): IPageBase {
+    private findRoute(url: string): IPageBaseController {
 
         for (let i = 0; i < this.routes.length; i++) {
             let route = this.routes[i];
@@ -29,8 +29,8 @@ class PageRoutes implements IRouteBase {
         return null;
     }
 
-    private routes: Array<IPageBase> = [
-        IndexPage
+    private routes: Array<IPageBaseController> = [
+        IndexPageController
     ];
 }
 

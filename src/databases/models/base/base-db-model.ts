@@ -2,6 +2,14 @@
 
 export class BaseDBModel<T> implements IDBModel<T> {
 
+    public hasMany(dbModel: BaseDBModel<any>, settings?: any): void {
+       
+    }
+
+    public belongsTo(dbModel: BaseDBModel<any>, settings?: any): void {
+       
+    }
+
     public async findById(id: number): Promise<T> {
         return Promise.resolve(null);
     }
