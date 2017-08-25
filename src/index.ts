@@ -47,6 +47,7 @@ class Server {
     }
 
     private static(): void {
+        this.app.use('/libs', express.static(path.join(__dirname, 'node_modules')));
         this.app.use('/css', express.static(path.join(__dirname, 'static/css')));
         this.app.use('/js', express.static(path.join(__dirname, 'static/js')));
         this.app.use('/images', express.static(path.join(__dirname, 'static/images')));

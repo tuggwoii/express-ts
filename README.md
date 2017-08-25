@@ -5,6 +5,9 @@ $ build on file change: 'grunt watch'
 $ build: 'grunt build'
 $ run: 'grunt run'
 $ run production: 'grunt run-production'
+$ add new migration: 'grunt add-migration'
+$ update database: 'grunt update-database'
+$ undo last migration: 'grunt undo-migration'
 
 ##sequelize cli
 $ sequelize db:migrate        # Run pending migrations.

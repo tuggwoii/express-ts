@@ -36,6 +36,9 @@
             lint: {
                 command: 'ng lint'
             },
+            npm_install: {
+                command: 'cd build && npm install'
+            },
             add_migration: {
                 command: 'sequelize migration:create --config src/configs/database-config.json'
             },
@@ -75,7 +78,7 @@
     grunt.registerTask('default', ['watch']);     
     grunt.registerTask('watch', ['watch']);
     grunt.registerTask('build', ['ts', 'copy']);
-    grunt.registerTask('run', ['ts', 'copy', 'env:dev', 'shell:update_database', 'notify', 'shell:run']);
+    grunt.registerTask('run', ['ts', 'copy', 'env:dev', 'shell:update_database', 'shell:npm_install', 'notify', 'shell:run']);
     grunt.registerTask('run-production', ['ts', 'copy', 'env:production', 'notify', 'shell:run']);
     grunt.registerTask('add-migration', ['shell:add_migration']);
     grunt.registerTask('update-database', ['shell:update_database']);

@@ -13,4 +13,6 @@ export interface IRequest {
     body: any;
 
     user: User
+
+    connection: any;
 }
