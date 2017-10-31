@@ -3,6 +3,7 @@ import { ErrorHandlerBase } from "./base/error-handler-base";
 import { IRequest } from "../models/requests/base/interface-request";
 import { IResponse } from "../models/responses/base/interface-response";
 import { Log } from "../models/cores/log";
+import { LogService }  from "../services/log-service";
 
 declare const global: any;
 const fs: any = require('fs');
@@ -10,29 +11,26 @@ const path: any = require('path');
 
 class ServerErrorHandler extends ErrorHandlerBase implements IErrorHandlerBase {
 
-    private errorView: string = 'static/views/pages/error.html';
+    private errorView: string = 'static/views/pages/500.html';
 
     public handle(err: any, request: IRequest, response: IResponse) {
-
-        console.log(request.url);
-        console.log(err);
-
 
         (async () => {
 
             let log = new Log({
                 message: err.message,
                 stackTrace: err.stack,
-                body: request.body,
-                url: request.url,
-                ip: this.getIP(request)
+                body: JSON.stringify(request.body),
+                url: request.originalUrl,
+                ip: this.getIP(request),
+                status: err.status ? err.status : 500
             });
 
-
-
+            var result = await LogService.addLog(log);
+            console.log(new Log(result));
         })();
 
-        if (this.isApiRoute(request.url)) {
+        if (this.isApiRoute(request.originalUrl)) {
             if (err.status == 400) {
                 response.status(err.status).send({
                     data: {},
@@ -53,16 +51,8 @@ class ServerErrorHandler extends ErrorHandlerBase implements IErrorHandlerBase {
         }
     }
 
-    private isApiRoute(url: string): boolean {
-        return url.indexOf('/api/') > -1;
-    }
-
-    private getIP(request: IRequest): string {
-        return (request.headers['x-forwarded-for'] || '').split(',')[0]
-            || request.connection.remoteAddress;
-    }
 }
 
 let serverError = new ServerErrorHandler();
 
-export = serverError;
+export { serverError as ServerErrorHandler };

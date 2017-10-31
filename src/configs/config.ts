@@ -25,4 +25,4 @@ let productionConfig: Configuration = new Configuration(
 let config = process.env.NODE_ENV == Environment.Production ?
     productionConfig : devConfig;
 
-export = config;
+export { config as Configs };

@@ -1,7 +1,7 @@
-import * as UsersDBModel from "./models/users";
-import * as UserRolesDBModel from "./models/user-roles";
-import * as RolesDBModel from "./models/roles";
-import * as LogsDBModel from "./models/logs";
+import { UsersDBModel } from "./models/users";
+import { UserRolesDBModel } from "./models/user-roles";
+import { RolesDBModel } from "./models/roles";
+import { LogsDBModel } from "./models/logs";
 
 UsersDBModel.hasMany(UserRolesDBModel, { as: 'roles' });
 RolesDBModel.hasMany(UserRolesDBModel);

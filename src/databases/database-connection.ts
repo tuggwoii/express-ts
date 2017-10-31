@@ -19,4 +19,4 @@ const sequelize = new Sequelize(configs.database, configs.username, configs.pass
     logging: false
 });
 
-export = sequelize;
+export { sequelize as DbContext };

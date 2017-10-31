@@ -2,34 +2,31 @@
 import { IResponse } from "../../models/responses/base/interface-response";
 import { ApiBaseController } from "./base/api-base-controller";
 import { Route } from "../../models/routes/route";
-import { LoggedInUser } from "../../models/responses/users/logged-in-user";
-import { SimpleUser } from "../../models/responses/users/simple-user";
 import { RequestMethods } from "../../models/requests/base/request-methods";
 import { IRequest } from "../../models/requests/base/interface-request";
-import { Login } from "../../models/requests/users/login";
+import { Log } from "../../models/cores/log";
 import { RoleTypes } from "../../models/cores/role-types";
-import { UserService } from "../../services/user-service";
-import { User } from "../../models/cores/user";
+import { LogService } from "../../services/log-service";
 
-class UserApiController extends ApiBaseController implements IApiBaseController {
-
+class LogApiController extends ApiBaseController implements IApiBaseController {
+    
     constructor() {
 
-        super(UserService, '/users');
+        super(LogService, '/logs');
 
         this.createRoutes([
             new Route(this, '', RequestMethods.GET, this.getAll, [RoleTypes.Administrator]),
-            new Route(this, '/{id}', RequestMethods.GET, this.getById, [RoleTypes.Administrator]),
-            new Route(this, '/login', RequestMethods.POST, this.login),
-            new Route(this, '/me', RequestMethods.GET, this.me, [RoleTypes.User, RoleTypes.Administrator])
+            new Route(this, '/{id}', RequestMethods.GET, this.getById, [RoleTypes.Administrator])
         ]);
     }
 
     public getAll(context: IApiBaseController, request: IRequest, response: IResponse) {
+
         (async () => {
             let query = await context.createPagingQuery(context.service, request);
             let results = await context.service.getAll(query);
             let meta = context.createPagingMeta(request);
+            context.success(response, results, meta);
         })().catch((err) => {
             context.serverError(request, response, err);
         });
@@ -54,23 +51,8 @@ class UserApiController extends ApiBaseController implements IApiBaseController 
         });
     }
 
-    public me(context: IApiBaseController, request: IRequest, response: IResponse) {
-
-        context.success(response, new SimpleUser(request.user));
-    }
-
-    public login(context: IApiBaseController, request: IRequest, response: IResponse) {
-
-        let login = new Login(request.body);
-
-        login.isValid().then((user) => {
-            context.success(response, new LoggedInUser(user))
-        }).catch((err) => {
-            context.badRequest(request, response, err);
-        })
-    }
 }
 
-let userApiController = new UserApiController();
+let logApiController = new LogApiController();
 
-export { userApiController as UserApiController };
+export { logApiController as LogApiController };

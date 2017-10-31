@@ -1,10 +1,10 @@
-﻿import * as Sequelize from "../database-connection";
-import { IDBModel } from "./base/interface-db-model";
+﻿import { IDBModel } from "./base/interface-db-model";
+import { DbContext } from "../database-connection";
 import { Role } from "../../models/cores/role";
 
 const sequelize = require('sequelize');
 
-const RolesDBModel: IDBModel<Role> = Sequelize.define('Roles', {
+const rolesDBModel: IDBModel<Role> = DbContext.define('Roles', {
     id: {
         field: 'Id',
         type: sequelize.INTEGER,
@@ -18,4 +18,4 @@ const RolesDBModel: IDBModel<Role> = Sequelize.define('Roles', {
     }
 });
 
-export = RolesDBModel;
+export { rolesDBModel as RolesDBModel }

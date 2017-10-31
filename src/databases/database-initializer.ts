@@ -1,6 +1,6 @@
-﻿import * as UserDBModel from "../databases/models/users";
-import * as RolesDBModel from "../databases/models/roles";
-import * as UserRolesDBModel from "../databases/models/user-roles";
+﻿import { UsersDBModel } from "../databases/models/users";
+import { RolesDBModel } from "../databases/models/roles";
+import { UserRolesDBModel } from "../databases/models/user-roles";
 import { User } from "../models/cores/user";
 import { Role } from "../models/cores/role";
 import { UserRole } from "../models/cores/user-role";
@@ -42,7 +42,7 @@ export class DatabaseInitializer {
 
         return new Promise((resolve) => {
          
-             UserDBModel.findOne().then((data) => {
+            UsersDBModel.findOne().then((data) => {
                 if (!data) {
                     return (async () => {
                         await this.createUser('Tak', '1234');
@@ -111,7 +111,7 @@ export class DatabaseInitializer {
                 lastRefreshToken: new Date()
             });
 
-            UserDBModel.create(user).then(() => {
+            UsersDBModel.create(user).then(() => {
                 resolve()
             }).catch((err) => {
                 throw err;
@@ -137,7 +137,7 @@ export class DatabaseInitializer {
     private static async assignRoleToUser(userName: string, roleName: string): Promise<any> {
         return new Promise((resolve) => {
             return (async () => {
-                let user = await UserDBModel.findOne({
+                let user = await UsersDBModel.findOne({
                     where: { username: userName }
                 });
 
@@ -161,7 +161,7 @@ export class DatabaseInitializer {
                 else {
                     throw new Error('user/role not found')
                 }
-            })();
+            })()
         });
     }
 }

@@ -1,5 +1,5 @@
-﻿import { BaseService } from "./base-service";
-import { IBaseService } from "./interface-base-service";
+﻿import { BaseService } from "./base/base-service";
+import { IBaseService } from "./base/interface-base-service";
 import { Log } from "../models/cores/log";
 import { LogsDBModel } from "../databases/database-context";
 
@@ -9,21 +9,17 @@ class LogService extends BaseService<Log> implements IBaseService<Log> {
         super(LogsDBModel);
     }
 
-    public AddLog(log: Log): Promise<Log> {
+    public addLog(log: Log): Promise<Log> {
         return new Promise((resolve, reject) => {
-            LogsDBModel.create(log).then(() => {
-                resolve();
+            LogsDBModel.create(log).then((log) => {
+                resolve(log);
             }).catch((err) => {
                 throw err;
             });
         });
     }
-
-    public GetAll(): Promise<Array<Log>> {
-        return LogsDBModel.findAll();
-    }
 }
 
 let logService = new LogService();
 
-export = logService;
+export { logService as LogService };

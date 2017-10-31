@@ -2,7 +2,7 @@ import { IBaseModel } from "../../base/interface-base-model";
 import { BaseModel } from "../../base/base-model";
 import { User } from "../../cores/user";
 import { HashHelper } from "../../../helpers/hash-helper";
-import * as UsersDBModel from "../../../databases/models/users";
+import { UsersDBModel }  from "../../../databases/models/users";
 
 declare const Promise: any;
 

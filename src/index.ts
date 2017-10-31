@@ -1,11 +1,13 @@
 //import modules
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import * as ApiRoutes from './routes/api-routes';
-import * as PageRoutes from './routes/page-routes';
-import * as ErrorHandler from './errors/server-error-handler';
-import * as NotFoundHandler from './errors/not-found-handler';
-import * as Authentication from "./middlewares/authentication";
+import * as cookieParser from 'cookie-parser';
+import { Authentication } from "./middlewares/authentication";
+import { AngularAssets } from "./middlewares/angular";
+import { ApiRoutes } from './routes/api-routes';
+import { PageRoutes } from './routes/page-routes';
+import { ServerErrorHandler} from './errors/server-error-handler';
+import { NotFoundErrorHandler } from './errors/not-found-handler';
 import { IResponse } from "./models/responses/base/interface-response";
 import { IRequest } from "./models/requests/base/interface-request";
 import { DatabaseInitializer } from "./databases/database-initializer";
@@ -42,8 +44,10 @@ class Server {
         this.app.set('view engine', 'html');
         this.app.engine('html', ejs.renderFile);
         this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(cookieParser());
         this.app.use(bodyParser.json());
         this.app.use(Authentication.execute());
+        this.app.use(AngularAssets.execute());
     }
 
     private static(): void {
@@ -65,18 +69,18 @@ class Server {
         })
 
         this.app.use('*', (request: IRequest, response: IResponse, next: Function) => {
-            NotFoundHandler.handle(request, response);
+            NotFoundErrorHandler.handle(request, response);
         })
 
         this.app.use((err: any, request: IRequest, response: IResponse, next: Function) => {
-            ErrorHandler.handle(err, request, response);
+            ServerErrorHandler.handle(err, request, response);
         })
     }
 
     private run(): void {
 
         DatabaseInitializer.init().then(() => {
-            this.app.listen(this.port, () => console.log('App runing on port ' + this.port));
+            this.app.listen(this.port, () => console.log('App running on port ' + this.port));
         }).catch((err) => {
             console.log(err);
         })

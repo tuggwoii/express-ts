@@ -1,6 +1,7 @@
 ﻿import { IDBModel } from "./interface-db-model";
 
 export class BaseDBModel<T> implements IDBModel<T> {
+   
 
     public hasMany(dbModel: BaseDBModel<any>, settings?: any): void {
        
@@ -8,6 +9,10 @@ export class BaseDBModel<T> implements IDBModel<T> {
 
     public belongsTo(dbModel: BaseDBModel<any>, settings?: any): void {
        
+    }
+
+    public count(query?: any): Promise<number> {
+        return Promise.resolve(0);
     }
 
     public async findById(id: number): Promise<T> {

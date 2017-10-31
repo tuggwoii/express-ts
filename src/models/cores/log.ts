@@ -17,6 +17,8 @@ export class Log extends BaseDatabaseModel implements IBaseModel, IDatabaseModel
 
     public url: string;
 
+    public status: number;
+
     constructor(data?: any) {
         super(data);
     }
@@ -28,5 +30,6 @@ export class Log extends BaseDatabaseModel implements IBaseModel, IDatabaseModel
         this.body = data.body;
         this.ip = data.ip;
         this.url = data.url;
+        this.status = data.status;
     }
 }

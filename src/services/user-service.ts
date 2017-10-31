@@ -1,6 +1,6 @@
 import { HashHelper } from "../helpers/hash-helper";
-import { BaseService } from "./base-service";
-import { IBaseService } from "./interface-base-service";
+import { BaseService } from "./base/base-service";
+import { IBaseService } from "./base/interface-base-service";
 import { User } from "../models/cores/user";
 import { UsersDBModel } from "../databases/database-context";
 import { UserRolesDBModel } from "../databases/database-context";
@@ -29,7 +29,7 @@ class UserService extends BaseService<User> implements IBaseService<User> {
 
     public GetUserByIdWithRoles(id: number): Promise<User> {
         return new Promise((resolve, reject) => {
-            this.GetOne({
+            this.getOne({
                 where: {
                     id: id
                 },
@@ -60,7 +60,7 @@ class UserService extends BaseService<User> implements IBaseService<User> {
 
     public GetUserByToken(token: string): Promise<User> {
         return new Promise((resolve, reject) => {
-            this.GetOne({
+            this.getOne({
                 where: {
                     $or: [
                         { token: token },
@@ -95,7 +95,7 @@ class UserService extends BaseService<User> implements IBaseService<User> {
     public RollToken(id: number): Promise<User> {
         return new Promise((resolve, reject) => {
             (async () => {
-                let user = await this.GetOne({ where: { id: id } });
+                let user = await this.getOne({ where: { id: id } });
                 if (user) {
                     let newToken = await this.generateRefreshToken();
                     user.update({
@@ -138,4 +138,4 @@ class UserService extends BaseService<User> implements IBaseService<User> {
 
 let userService = new UserService();
 
-export = userService;
+export { userService as UserService };

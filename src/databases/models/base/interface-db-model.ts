@@ -10,6 +10,8 @@ export interface IDBModel<T> {
 
     findAll(query?: any): Promise<Array<T>>
 
+    count(): Promise<number>
+
     belongsTo(dbModel: BaseDBModel<any>, settings?: any): void;
 
     hasMany(dbModel: BaseDBModel<any>, settings?: any): void;

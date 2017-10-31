@@ -1,11 +1,10 @@
-﻿import * as Sequelize from "../database-connection";
-import * as UserRolesDBModel from "./user-roles";
+﻿import { DbContext } from "../database-connection";
 import { BaseDBModel } from "./base/base-db-model";
 import { Log } from "../../models/cores/log";
 
 const sequelize = require('sequelize');
 
-const LogsDBModel: BaseDBModel<Log> = Sequelize.define('Logs', {
+const logsDBModel: BaseDBModel<Log> = DbContext.define('Logs', {
     id: {
         field: 'Id',
         type: sequelize.INTEGER,
@@ -36,7 +35,12 @@ const LogsDBModel: BaseDBModel<Log> = Sequelize.define('Logs', {
         field: 'Url',
         type: sequelize.STRING(500),
         allowNull: false
+    },
+    status: {
+        field: 'Status',
+        type: sequelize.INTEGER,
+        allowNull: false
     }
 });
 
-export = LogsDBModel;
+export { logsDBModel as LogsDBModel };

@@ -3,6 +3,7 @@ import { IResponse } from "../responses/base/interface-response";
 import { RequestMethods } from "../requests/base/request-methods";
 import { IRequest } from "../requests/base/interface-request";
 import { RoleTypes } from "../cores/role-types";
+import { IDatabaseModel } from "../base/interface-database-model";
 
 type Handler = (request: IRequest, response: IResponse) => void;
 
