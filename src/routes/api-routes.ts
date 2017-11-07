@@ -25,8 +25,7 @@ class ApiRoutes extends RouteBase implements IRouteBase {
 
         this.parseQueryStrings(request);
         this.parsePaging(request);
-        this.removeTrilingSlash(request);
-        
+        this.removeTrilingSlash(request);        
         let apiRoute = this.findApiRouteByUrl(request);
 
         if (apiRoute) {

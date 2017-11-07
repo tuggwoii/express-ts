@@ -48,7 +48,10 @@
                 command: 'sequelize db:migrate:undo --config src/configs/database-config.json'
             },
             client_build: {
-                command: 'cd client && ng build'
+                command: 'cd client && ng build --aot'
+            },
+            client_prod_build: {
+                command: 'cd client && ng build --prod'
             },
         },
         copy: {
@@ -62,6 +65,14 @@
                     { expand: true, src: ['src/configs/database-config.json'], dest: 'build/configs/', filter: 'isFile', flatten: true },
                     { expand: true, src: ['migrations/*'], dest: 'build/migrations', filter: 'isFile', flatten: true },
                     { expand: true, src: ['package.json'], dest: 'build/', filter: 'isFile', flatten: true }
+                ]
+            },
+            client: {
+                files: [
+                    { expand: true, src: ['client/dist/*.js'], dest: 'build/static/js', filter: 'isFile', flatten: true },
+                    { expand: true, src: ['client/dist/*.map'], dest: 'build/static/js', filter: 'isFile', flatten: true },
+                    { expand: true, src: ['client/dist/*.css'], dest: 'build/static/css', filter: 'isFile', flatten: true },
+                    { expand: true, src: ['client/dist/*.html'], dest: 'build/static/views/pages', filter: 'isFile', flatten: true }
                 ]
             }
         }
@@ -80,10 +91,12 @@
 
     //tasks
     grunt.registerTask('default', ['watch']);     
-    grunt.registerTask('build', ['ts', 'copy']);
+    grunt.registerTask('build', ['ts', 'shell:client_build', 'copy']);
     grunt.registerTask('build-client', ['shell:client_build']);
-    grunt.registerTask('run', ['ts', 'copy', 'env:dev', 'shell:update_database', 'shell:npm_install', 'notify', 'shell:run']);
-    grunt.registerTask('run-production', ['ts', 'copy', 'env:production', 'notify', 'shell:run']);
+    grunt.registerTask('build-prod', ['ts', 'shell:client_prod_build', 'copy']);
+    grunt.registerTask('run', ['ts', 'copy', 'env:dev', 'shell:update_database', 'notify', 'shell:run']);
+    grunt.registerTask('run-full', ['ts', 'copy', 'env:dev', 'shell:update_database', 'shell:npm_install', 'shell:client_build', 'notify', 'shell:run']);
+    grunt.registerTask('run-production', ['ts', 'shell:client_prod_build', 'copy', 'env:production', 'shell:update_database', 'notify', 'shell:run']);
     grunt.registerTask('add-migration', ['shell:add_migration']);
     grunt.registerTask('update-database', ['shell:update_database']);
     grunt.registerTask('undo-migration', ['shell:undo_migrate']);

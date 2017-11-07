@@ -9,26 +9,19 @@ type Handler = (request: IRequest, response: IResponse) => void;
 
 export class Route {
 
-    constructor(controller: IApiBaseController, url: string, method: RequestMethods, handler: Function, roles?: Array<RoleTypes>) {
-        this.url = url;
-        this.method = method;
-        this.controller = controller;
-        this.controllerHandler = handler;
-        this.allowedRoles = roles;
-    }
-
-    public controller: IApiBaseController;
-
-    public controllerHandler: Function;
-
     public url: string;
 
     public method: RequestMethods;
 
     public allowedRoles: Array<RoleTypes>;
 
-    public handler: Handler = (request: IRequest, response: IResponse) => {
-        this.controllerHandler(this.controller, request, response)
+    public handler: Handler;
+
+    constructor(url: string, method: RequestMethods, handler: Handler, roles?: Array<RoleTypes>) {
+        this.url = url;
+        this.method = method;
+        this.allowedRoles = roles;
+        this.handler = handler;
     }
 
 }

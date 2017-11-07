@@ -26,8 +26,8 @@ export class ApiBaseController implements IApiBaseController {
         this.baseUrl = baseUrl;
 
         this.routes = [
-            new Route(this, this.mapRoute(''), RequestMethods.GET, this.getAll),
-            new Route(this, this.mapRoute('/{id}'), RequestMethods.GET, this.getById)
+            new Route(this.mapRoute(''), RequestMethods.GET, (request: IRequest, response: IResponse) => this.getAll(request, response)),
+            new Route(this.mapRoute('/{id}'), RequestMethods.GET, (request: IRequest, response: IResponse) => this.getById(request, response))
         ];
     }
 
@@ -40,33 +40,34 @@ export class ApiBaseController implements IApiBaseController {
         return routeUrl;
     }
 
-    public getAll(context: IApiBaseController, request: IRequest, response: IResponse) {
+    public getAll(request: IRequest, response: IResponse) {
         (async () => {
-            let query = await context.createPagingQuery(context.service, request);
-            let results = await context.service.getAll(query);
-            let meta = context.createPagingMeta(request);
-            context.success(response, results, meta);
+            let query = await this.createPagingQuery(this.service, request);
+            let results = await this.service.getAll(query);
+            let meta = this.createPagingMeta(request);
+            this.success(response, results, meta);
         })().catch((err) => {
-            context.serverError(request, response, err);
+                console.log(this);
+                this.serverError(request, response, err);
         });
     }
 
-    public getById(context: IApiBaseController, request: IRequest, response: IResponse) {
+    public getById(request: IRequest, response: IResponse) {
         (async () => {
             if (request.params.id && !isNaN(parseInt(request.params.id))) {
-                let results = await context.service.getOne({ where: { id: request.params.id } });
+                let results = await this.service.getOne({ where: { id: request.params.id } });
                 if (results) {
-                    context.success(response, results);
+                    this.success(response, results);
                 }
                 else {
-                    context.notFound(request, response);
+                    this.notFound(request, response);
                 }
             }
             else {
-                context.notFound(request, response);
+                this.notFound(request, response);
             }
         })().catch((err) => {
-            context.serverError(request, response, err);
+            this.serverError(request, response, err);
         });
     }
 
@@ -114,7 +115,9 @@ export class ApiBaseController implements IApiBaseController {
 
     public createPagingQuery(service: IBaseService<IDatabaseModel>, request: IRequest): Promise<any> {
         return new Promise((resolve, reject) => {
+            console.log('in here');
             (async () => {
+                console.log(request.paging);
                 if (request.paging) {
                     let total = await service.count();
                     request.paging.calculate(total);
@@ -126,7 +129,10 @@ export class ApiBaseController implements IApiBaseController {
                 else {
                     resolve({});
                 }
-            })()
+            })().catch((err) => {
+                    console.log('reject');
+                    reject(err);
+            })
         });
     }
 

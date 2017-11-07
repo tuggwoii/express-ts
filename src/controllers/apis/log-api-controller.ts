@@ -15,39 +15,39 @@ class LogApiController extends ApiBaseController implements IApiBaseController {
         super(LogService, '/logs');
 
         this.createRoutes([
-            new Route(this, '', RequestMethods.GET, this.getAll, [RoleTypes.Administrator]),
-            new Route(this, '/{id}', RequestMethods.GET, this.getById, [RoleTypes.Administrator])
+            new Route('', RequestMethods.GET, (request: IRequest, response: IResponse) => this.getAll(request, response), [RoleTypes.Administrator]),
+            new Route('/{id}', RequestMethods.GET, (request: IRequest, response: IResponse) => this.getById(request, response), [RoleTypes.Administrator])
         ]);
     }
 
-    public getAll(context: IApiBaseController, request: IRequest, response: IResponse) {
-
+    public getAll(request: IRequest, response: IResponse) {
+        console.log('aaa');
         (async () => {
-            let query = await context.createPagingQuery(context.service, request);
-            let results = await context.service.getAll(query);
-            let meta = context.createPagingMeta(request);
-            context.success(response, results, meta);
+            let query = await this.createPagingQuery(this.service, request);
+            let results = await this.service.getAll(query);
+            let meta = this.createPagingMeta(request);
+            this.success(response, results, meta);
         })().catch((err) => {
-            context.serverError(request, response, err);
+                this.serverError(request, response, err);
         });
     }
 
-    public getById(context: IApiBaseController, request: IRequest, response: IResponse) {
+    public getById(request: IRequest, response: IResponse) {
         (async () => {
             if (request.params.id && !isNaN(parseInt(request.params.id))) {
-                let result = await context.service.getOne({ where: { id: request.params.id } });
+                let result = await this.service.getOne({ where: { id: request.params.id } });
                 if (result) {
-                    context.success(response, result);
+                    this.success(response, result);
                 }
                 else {
-                    context.notFound(request, response);
+                    this.notFound(request, response);
                 }
             }
             else {
-                context.notFound(request, response);
+                this.notFound(request, response);
             }
         })().catch((err) => {
-            context.serverError(request, response, err);
+            this.serverError(request, response, err);
         });
     }
 

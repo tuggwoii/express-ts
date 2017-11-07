@@ -18,55 +18,56 @@ class UserApiController extends ApiBaseController implements IApiBaseController 
         super(UserService, '/users');
 
         this.createRoutes([
-            new Route(this, '', RequestMethods.GET, this.getAll, [RoleTypes.Administrator]),
-            new Route(this, '/{id}', RequestMethods.GET, this.getById, [RoleTypes.Administrator]),
-            new Route(this, '/login', RequestMethods.POST, this.login),
-            new Route(this, '/me', RequestMethods.GET, this.me, [RoleTypes.User, RoleTypes.Administrator])
+            new Route('', RequestMethods.GET, (request: IRequest, response: IResponse) => this.getAll(request, response), [RoleTypes.Administrator]),
+            new Route('/{id}', RequestMethods.GET, (request: IRequest, response: IResponse) => this.getById(request, response), [RoleTypes.Administrator]),
+            new Route('/login', RequestMethods.POST, (request: IRequest, response: IResponse) => this.login(request, response)),
+            new Route('/me', RequestMethods.GET, (request: IRequest, response: IResponse) => this.me(request, response), [RoleTypes.User, RoleTypes.Administrator])
         ]);
     }
 
-    public getAll(context: IApiBaseController, request: IRequest, response: IResponse) {
+    public getAll(request: IRequest, response: IResponse) {
         (async () => {
-            let query = await context.createPagingQuery(context.service, request);
-            let results = await context.service.getAll(query);
-            let meta = context.createPagingMeta(request);
+            let query = await this.createPagingQuery(this.service, request);
+            let results = await this.service.getAll(query);
+            let meta = this.createPagingMeta(request);
+            this.success(response, results, meta);
         })().catch((err) => {
-            context.serverError(request, response, err);
+                this.serverError(request, response, err);
         });
     }
 
-    public getById(context: IApiBaseController, request: IRequest, response: IResponse) {
+    public getById(request: IRequest, response: IResponse) {
         (async () => {
             if (request.params.id && !isNaN(parseInt(request.params.id))) {
-                let result = await context.service.getOne({ where: { id: request.params.id } });
+                let result = await this.service.getOne({ where: { id: request.params.id } });
                 if (result) {
-                    context.success(response, result);
+                    this.success(response, result);
                 }
                 else {
-                    context.notFound(request, response);
+                    this.notFound(request, response);
                 }
             }
             else {
-                context.notFound(request, response);
+                this.notFound(request, response);
             }
         })().catch((err) => {
-            context.serverError(request, response, err);
+            this.serverError(request, response, err);
         });
     }
 
-    public me(context: IApiBaseController, request: IRequest, response: IResponse) {
+    public me(request: IRequest, response: IResponse) {
 
-        context.success(response, new SimpleUser(request.user));
+        this.success(response, new SimpleUser(request.user));
     }
 
-    public login(context: IApiBaseController, request: IRequest, response: IResponse) {
+    public login(request: IRequest, response: IResponse) {
 
         let login = new Login(request.body);
 
         login.isValid().then((user) => {
-            context.success(response, new LoggedInUser(user))
+            this.success(response, new LoggedInUser(user))
         }).catch((err) => {
-            context.badRequest(request, response, err);
+            this.badRequest(request, response, err);
         })
     }
 }
